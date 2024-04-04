@@ -17,8 +17,11 @@
     {"name":"Timelines","order":8,"path":"folders/Timelines.yy",},
   ],
   "ResourceOrderSettings":[
+    {"name":"obj_ball","order":2,"path":"objects/obj_ball/obj_ball.yy",},
     {"name":"obj_wall","order":1,"path":"objects/obj_wall/obj_wall.yy",},
     {"name":"rm_init","order":1,"path":"rooms/rm_init/rm_init.yy",},
+    {"name":"spr_ball","order":2,"path":"sprites/spr_ball/spr_ball.yy",},
     {"name":"spr_wall","order":1,"path":"sprites/spr_wall/spr_wall.yy",},
+    {"name":"spr_tile","order":3,"path":"sprites/spr_tile/spr_tile.yy",},
   ],
 }
