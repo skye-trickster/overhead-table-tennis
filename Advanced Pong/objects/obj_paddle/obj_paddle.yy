@@ -26,7 +26,7 @@
   "physicsShapePoints":[],
   "physicsStartAwake":true,
   "properties":[
-    {"$GMObjectProperty":"","%Name":"paddle_speed","filters":[],"listItems":[],"multiselect":false,"name":"paddle_speed","rangeEnabled":true,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"5","varType":0,},
+    {"$GMObjectProperty":"","%Name":"paddle_speed","filters":[],"listItems":[],"multiselect":false,"name":"paddle_speed","rangeEnabled":true,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"4","varType":0,},
     {"$GMObjectProperty":"","%Name":"player_type","filters":[],"listItems":[
         "\"left\"",
         "\"right\"",

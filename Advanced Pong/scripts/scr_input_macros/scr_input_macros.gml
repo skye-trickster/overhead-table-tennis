@@ -15,6 +15,8 @@
 #macro RIGHT_UP_BUTTON vk_up
 #macro RIGHT_DOWN_BUTTON vk_down
 
+#macro CONFIRM_BUTTON vk_space
+
 #endregion
 
 #macro LEFT_INPUT_UP_PRESSED keyboard_check_pressed(LEFT_UP_BUTTON)
@@ -28,6 +30,8 @@
 
 #macro RIGHT_INPUT_DOWN_PRESSED keyboard_check_pressed(RIGHT_DOWN_BUTTON)
 #macro RIGHT_INPUT_DOWN keyboard_check(RIGHT_DOWN_BUTTON)
+
+#macro INPUT_CONFIRM_BUTTON_PRESSED keyboard_check_pressed(CONFIRM_BUTTON)
 
 #macro LEFT_INPUT_VERTICAL (LEFT_INPUT_DOWN - LEFT_INPUT_UP)
 #macro RIGHT_INPUT_VERTICAL (RIGHT_INPUT_DOWN - RIGHT_INPUT_UP)
