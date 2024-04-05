@@ -1,4 +1,4 @@
-/// @desc Initialize paddle
+/// @desc Initialize ball
 
 enum BALL_STATE {
 	WAITING,

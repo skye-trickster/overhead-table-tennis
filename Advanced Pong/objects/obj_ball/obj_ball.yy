@@ -30,7 +30,7 @@
     {"$GMObjectProperty":"","%Name":"initial_speed","filters":[],"listItems":[],"multiselect":false,"name":"initial_speed","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"2","varType":0,},
     {"$GMObjectProperty":"","%Name":"maximum_speed","filters":[],"listItems":[],"multiselect":false,"name":"maximum_speed","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"20","varType":0,},
     {"$GMObjectProperty":"","%Name":"speed_multiplier","filters":[],"listItems":[],"multiselect":false,"name":"speed_multiplier","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"1","varType":0,},
-    {"$GMObjectProperty":"","%Name":"speed_increase","filters":[],"listItems":[],"multiselect":false,"name":"speed_increase","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"1","varType":0,},
+    {"$GMObjectProperty":"","%Name":"speed_increase","filters":[],"listItems":[],"multiselect":false,"name":"speed_increase","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0.1","varType":0,},
     {"$GMObjectProperty":"","%Name":"return_angle","filters":[],"listItems":[],"multiselect":false,"name":"return_angle","rangeEnabled":true,"rangeMax":180.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"75","varType":0,},
   ],
   "resourceType":"GMObject",
