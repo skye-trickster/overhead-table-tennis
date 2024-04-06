@@ -1,4 +1,5 @@
 /// @desc Movement and Collision
+if (GAME_PAUSED) return;
 
 switch(state) {
 	case BALL_STATE.WAITING:

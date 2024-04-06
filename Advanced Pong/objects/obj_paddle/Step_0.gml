@@ -1,5 +1,7 @@
 /// @description Move the paddle up and down
 
+if (GAME_PAUSED) return;
+
 var _vertical = 0;
 switch(player_type) {
 	case "left":

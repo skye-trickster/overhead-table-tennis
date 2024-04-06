@@ -11,5 +11,7 @@ if (has_advantage()) {
 	_score = "DEUCE";	
 }
 
+draw_set_color(c_white);
+draw_set_alpha(1);
 draw_set_halign(fa_center);
 draw_text_transformed(score_location.x, score_location.y, _score, score_location.scale, score_location.scale, 0);
