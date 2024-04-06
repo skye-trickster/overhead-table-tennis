@@ -38,6 +38,7 @@ function reset_ball(_settings = {_adjust_y_value: false, _center_y: true}) {
 		y = instance_find(obj_paddle, serving_player).y
 	}
 	last_paddle = instance_find(obj_paddle, (serving_player + 1) mod 2);
+	state = BALL_STATE.PLAYING;
 }
 
 current_speed = 0;

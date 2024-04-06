@@ -1,27 +1,6 @@
 /// @desc Movement and Collision
 if (GAME_PAUSED) return;
 
-switch(state) {
-	case BALL_STATE.WAITING:
-		if(INPUT_CONFIRM_BUTTON_PRESSED) {
-			start_serve();
-			state = BALL_STATE.PLAYING;
-		}
-		break;
-	case BALL_STATE.PLAYING:
-		move_ball();
-		if (x < 0 or x > room_width) {
-			last_paddle.points += 1;
-			if (switch_next_turn) {
-				serving_player = (serving_player + 1) mod 2;
-			}
-			switch_next_turn = not switch_next_turn;
-			reset_ball({_adjust_y_value: true, _center_y: false});
-			start_serve();
-		}
-		break;
-}
-
 /// @funciton		move_ball()
 /// @description	move the ball and bounce according to collision rules
 function move_ball() {
@@ -65,4 +44,22 @@ function move_ball() {
 
 	y = _y;
 	x = _x;
+}
+
+switch(state) {
+	case BALL_STATE.WAITING:
+		show_debug_log(false);
+		break;
+	case BALL_STATE.PLAYING:
+		move_ball();
+		if (x < 0 or x > room_width) {
+			last_paddle.points += 1;
+			if (switch_next_turn) {
+				serving_player = (serving_player + 1) mod 2;
+			}
+			switch_next_turn = not switch_next_turn;
+			reset_ball({_adjust_y_value: true, _center_y: false});
+			start_serve();
+		}
+		break;
 }

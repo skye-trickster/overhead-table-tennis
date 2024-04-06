@@ -8,4 +8,6 @@ if (GAME_PAUSED) {
 	draw_set_color(c_black);
 	draw_set_alpha(0.5);
 	draw_rectangle(0, 0, _width, _height, false);
+	show_debug_message("width: " + string(display_get_width()) + " height: " + string(display_get_height()));
+	show_debug_message("width: " + string(window_get_width()) + " height: " + string(window_get_height()));
 }

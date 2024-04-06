@@ -34,6 +34,8 @@
         "\"right\"",
       ],"multiselect":false,"name":"player_type","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"left\"","varType":6,},
     {"$GMObjectProperty":"","%Name":"points","filters":[],"listItems":[],"multiselect":false,"name":"points","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
+    {"$GMObjectProperty":"","%Name":"automated","filters":[],"listItems":[],"multiselect":false,"name":"automated","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":3,},
+    {"$GMObjectProperty":"","%Name":"ball_threshold","filters":[],"listItems":[],"multiselect":false,"name":"ball_threshold","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"3","varType":0,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
