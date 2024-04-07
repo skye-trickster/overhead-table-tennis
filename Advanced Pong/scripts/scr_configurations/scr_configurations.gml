@@ -1,4 +1,6 @@
 global.sound_volume = 1;
+
+font_add_enable_aa(false);
 global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-", true, 2);
 draw_set_font(global.font);
 

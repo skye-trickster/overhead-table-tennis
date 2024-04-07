@@ -26,6 +26,17 @@ function start_game() {
 	global.game_state = GAME_STATE.PLAYING;
 }
 
+function reset_game() {
+	if (global.ball) {
+		instance_destroy(global.ball);
+		global.ball = noone;
+	}
+	for (var _i = 0; _i < array_length(global.paddle); ++_i) {
+		global.paddle[_i].score = 0;
+		global.paddle[_i].id.y = room_height / 2;
+	}
+}
+
 function serve_ball(_center = false) {
 	var _side = serving_side;
 	var _paddle = global.paddle[serving_side].id;
@@ -41,5 +52,11 @@ function serve_ball(_center = false) {
 		xspeed = dcos(_angle) * current_speed * sign(_paddle.x - x);
 		yspeed = dsin(_angle) * current_speed;
 		playing = true;
+	}
+}
+
+function end_game() {
+	if (NOT_ON_BROWSER) {
+		game_end();
 	}
 }

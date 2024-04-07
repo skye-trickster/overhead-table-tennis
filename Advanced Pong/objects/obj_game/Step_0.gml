@@ -10,13 +10,13 @@ switch(global.game_state) {
 		if(INPUT_CONFIRM_BUTTON_PRESSED) {
 			switch(global.main_menu.select()) {
 				case "start":
-					// Feather ignore GM2017
+					// Feather ignore GM2016
 					start_game();
 					global.main_menu.selected = 0;
 				break;
 
 				case "exit":
-					game_end();
+					end_game();
 				break;
 			}
 		}
@@ -54,18 +54,20 @@ switch(global.game_state) {
 					global.game_state = GAME_STATE.PLAYING;
 					global.pause_menu.selected = 0;
 				break;
+				
+				case "menu":
+					reset_game();
+					global.game_state = GAME_STATE.MENU;
+				break;
 
 				case "exit":
-					game_end();
+					end_game();
 				break;
 			}
 		}
 	break;
 }
 
-if (keyboard_check_pressed(vk_backspace)) {
-	show_debug_message({
-		"width": display_get_gui_width(),
-		"height": display_get_gui_height(),
-	});
+if (keyboard_check_pressed(vk_f4) and NOT_ON_BROWSER) {
+	window_set_fullscreen(not window_get_fullscreen())	
 }

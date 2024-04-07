@@ -26,10 +26,10 @@ global.paddle = {
 	}
 };
 
-/// @funcion		set_paddle(instance, side)
-/// @description	Sets the paddle
-/// @param {Id.Instance} _instance the object instance
-/// @param {real.PADDLE_SIDE} _side the side to set the paddle on.
+/// @funcion					set_paddle(instance, side)
+/// @description				Sets the paddle
+/// @param {Id.Instance}		_instance	the object instance
+/// @param {real.PADDLE_SIDE}	_side		the side to set the paddle on.
 function set_paddle(_instance, _side) {
 	global.paddle[_side] = {
 		id: _instance.id,

@@ -1,6 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
-if (INPUT_PAUSE_BUTTON) {
+if (INPUT_PAUSE_BUTTON and NOT_ON_BROWSER) {
 	quit_timer += DELTA_TIME;
 	if (quit_timer > time_to_quit) {
 		game_end();	

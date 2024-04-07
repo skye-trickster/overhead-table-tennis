@@ -8,7 +8,6 @@ function MenuNode(_text, _value) constructor {
 	function render(_x, _y, _text_scale, _color, _padding) {
 		var _width = string_width(text) * _text_scale;
 		var _height = string_height(text) * _text_scale;
-		// draw_rectangle_color(_x - _width / 2 - _padding, _y - _padding, _x + _width / 2 + _padding, _y + _height + _padding, _color, _color, _color, _color, true)
 		draw_text_transformed_color(_x, _y, text, _text_scale, _text_scale, 0, _color, _color, _color, _color, 1);
 	}
 }
@@ -18,7 +17,7 @@ function MenuNode(_text, _value) constructor {
 /// @param {Bool}				_overlay	Whether the menu should have an overlay over the GUI
 /// @param {Real}				_text_scale	The scale to adjust the text with
 ///	@description				A menu to be used in the overlay
-function Menu(_node_list, _title = "FAKE PONG GAME", _overlay = true, _text_scale = 4) constructor {
+function Menu(_node_list, _title = "FAKE PONG GAME", _overlay = true, _text_scale = 2) constructor {
 	return_value = "";
 	nodes = _node_list;
 	selected = 0;
@@ -95,5 +94,17 @@ global.main_menu = new Menu([
 
 global.pause_menu = new Menu([
 	new MenuNode("Resume", "resume"),
+	new MenuNode("Return to menu", "menu"),
 	new MenuNode("Exit Game", "exit"),
 ], "PAUSED");
+
+if (ON_BROWSER) {
+	global.main_menu = new Menu([
+		new MenuNode("Start Game", "start"),
+	], "ADVANCED PONG GAME");
+
+	global.pause_menu = new Menu([
+		new MenuNode("Resume", "resume"),
+		new MenuNode("Return to menu", "menu"),
+	], "PAUSED");
+}
