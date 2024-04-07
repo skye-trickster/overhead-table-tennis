@@ -84,3 +84,16 @@ switch(global.game_state) {
 if (keyboard_check_pressed(vk_f4) and NOT_ON_BROWSER) {
 	window_set_fullscreen(not window_get_fullscreen())	
 }
+
+if (DEBUG and keyboard_check_pressed(vk_backspace)) {
+	if (ON_BROWSER) {
+		show_debug_log(true);
+		window_set_size(1200, 900);
+		display_set_gui_size(640, 480);
+		surface_resize(application_surface, 640, 480);
+		show_debug_message(string(window_get_width()) + " " + string(window_get_height()))
+	} else {
+		display_set_gui_size(display_get_width(), display_get_height());
+		display_set_gui_maximize();
+	}	
+}

@@ -4,4 +4,4 @@
 #macro NOT_ON_BROWSER os_browser == browser_not_a_browser
 #macro GAME_TITLE "Overhead Table Tennis"
 
-#macro DEBUG debug_mode or false
+#macro DEBUG false
