@@ -4,27 +4,19 @@ enum GAME_STATE {
 	PLAYING,
 	BETWEEN_POINTS,
 	PAUSING,
+	WINNING,
 }
 
 enum PADDLE_SIDE {
 	LEFT,
-	RIGHT
+	RIGHT,
 }
 
 global.game_state = GAME_STATE.NOT_SPECIFIED;
 
 global.game_object = noone;
 global.ball = noone;
-global.paddle = {
-	"PADDLE_SIDE.LEFT": {
-		id: noone,
-		score: 0,
-	},
-	"PADDLE_SIDE.RIGHT": {
-		id: noone,
-		score: 0,
-	}
-};
+global.paddle = {};
 
 /// @funcion					set_paddle(instance, side)
 /// @description				Sets the paddle

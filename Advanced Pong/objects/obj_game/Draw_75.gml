@@ -1,5 +1,5 @@
-/// @description Insert description here
-// You can write your code in this editor
+/// @description Draw quit overlay
+
 var _variables = draw_store_variables();
 
 if (quit_timer > 0) {

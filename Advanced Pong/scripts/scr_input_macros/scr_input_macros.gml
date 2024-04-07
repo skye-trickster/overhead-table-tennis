@@ -1,10 +1,3 @@
-/* 
-	NAME:			SCR_INPUT_MACROS.GML
-	AUTHOR:			Skye Trickster
-	VERSION:		0.0.2
-	LAST MODIFIED:	3 APRIL 2024
-*/
-
 #region INPUT_MACROS
 
 #region BUTTON_MACROS

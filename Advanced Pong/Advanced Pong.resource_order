@@ -29,7 +29,6 @@
     {"name":"scr_game_state","order":1,"path":"scripts/scr_game_state/scr_game_state.yy",},
     {"name":"scr_input_macros","order":1,"path":"scripts/scr_input_macros/scr_input_macros.yy",},
     {"name":"scr_paddle_movement","order":5,"path":"scripts/scr_paddle_movement/scr_paddle_movement.yy",},
-    {"name":"scr_score_display","order":2,"path":"scripts/scr_score_display/scr_score_display.yy",},
     {"name":"scr_menu","order":9,"path":"scripts/scr_menu/scr_menu.yy",},
     {"name":"snd_point_gain","order":1,"path":"sounds/snd_point_gain/snd_point_gain.yy",},
     {"name":"snd_wall_hit","order":2,"path":"sounds/snd_wall_hit/snd_wall_hit.yy",},

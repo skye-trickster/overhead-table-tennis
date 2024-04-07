@@ -1,5 +1,8 @@
 /// @desc Initialize ball
 
+/// @function		reset_ball(settings)
+/// @description	Reset the ball's speed and additional positions
+/// @param {Struct}	_settings	Additional settings for the function
 /// @self			obj_ball
 function reset_ball(_settings = {_move_ball: false}) {
 	xspeed = 0;

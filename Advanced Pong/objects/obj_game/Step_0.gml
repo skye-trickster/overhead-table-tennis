@@ -1,4 +1,4 @@
-/// @description global game logic
+/// @description Global game logic
 
 switch(global.game_state) {
 	case GAME_STATE.MENU:
@@ -32,6 +32,7 @@ switch(global.game_state) {
 	case GAME_STATE.BETWEEN_POINTS:
 		point_timer += DELTA_TIME;
 		if (point_timer > time_between_points) {
+			switch_serve();
 			serve_ball();
 			point_timer = 0;
 			global.game_state = GAME_STATE.PLAYING;
@@ -41,7 +42,7 @@ switch(global.game_state) {
 	case GAME_STATE.PAUSING:
 		// resume if the pause button is pressed
 		if (INPUT_PAUSE_BUTTON_PRESSSED) {
-			global.game_state = GAME_STATE.PLAYING;
+			resume_game();
 		}
 		
 		if (INPUT_UP_PRESSED) {
@@ -51,19 +52,31 @@ switch(global.game_state) {
 		} else if(INPUT_CONFIRM_BUTTON_PRESSED) {
 			switch(global.pause_menu.select()) {
 				case "resume":
-					global.game_state = GAME_STATE.PLAYING;
-					global.pause_menu.selected = 0;
+					resume_game();
 				break;
 				
 				case "menu":
 					reset_game();
-					global.game_state = GAME_STATE.MENU;
 				break;
 
 				case "exit":
 					end_game();
 				break;
 			}
+		}
+	break;
+	
+	case GAME_STATE.WINNING:
+		point_timer += DELTA_TIME;
+		if (point_timer > time_after_win) {
+			point_timer = 0;
+			reset_game();
+		}
+		
+		color_rotater += DELTA_TIME;
+		if (color_rotater > color_rotate_timer) {
+			color_rotater = 0;
+			rotate_color();
 		}
 	break;
 }
