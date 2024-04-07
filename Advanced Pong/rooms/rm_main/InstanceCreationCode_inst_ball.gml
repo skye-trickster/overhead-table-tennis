@@ -1,0 +1,1 @@
+global.ball = self.id;

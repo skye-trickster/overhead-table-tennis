@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"scr_input_macros",
+  "%Name":"scr_error_handling",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_input_macros",
+  "name":"scr_error_handling",
   "parent":{
-    "name":"Macros",
-    "path":"folders/Scripts/Macros.yy",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,0 +1,1 @@
+#macro DELTA_TIME delta_time / power(10, 6)

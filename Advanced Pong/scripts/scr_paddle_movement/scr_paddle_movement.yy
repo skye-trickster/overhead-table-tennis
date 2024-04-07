@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"scr_input_macros",
+  "%Name":"scr_paddle_movement",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_input_macros",
+  "name":"scr_paddle_movement",
   "parent":{
-    "name":"Macros",
-    "path":"folders/Scripts/Macros.yy",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
