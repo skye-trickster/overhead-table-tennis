@@ -1,8 +1,11 @@
 /// @description Insert description here
 // You can write your code in this editor
-draw_set_font(global.font ?? fnt_default);
+
+var _variables = draw_store_variables();
+
 var _width = display_get_gui_width();
 var _height = display_get_gui_height();
+
 #region Score rendering
 draw_set_color(c_white);
 draw_set_alpha(1);
@@ -54,20 +57,22 @@ if (global.paddle[PADDLE_SIDE.RIGHT].score or global.paddle[PADDLE_SIDE.RIGHT].s
 #endregion
 
 #region Pause Overlay
-if (GAME_PAUSED or quit_timer > 0) {
+if (GAME_PAUSED) {
+	// Create black overlay box
 	var _alpha = GAME_PAUSED ? 0.5 : 0;
-	_alpha += (quit_timer / time_to_quit) * (1 - _alpha);
 	draw_set_color(c_black);
 	draw_set_alpha(_alpha);
 	draw_rectangle(0, 0, _width, _height, false);
-}
-
-if (GAME_PAUSED) {
+	
+	// create pause screen
 	draw_set_alpha(1);
 	draw_set_color(c_white);
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	draw_text_transformed(_width / 2, _height / 2, "PAUSED", 5, 5, 0);
+	draw_text_transformed(_width / 2, _height / 2, "PAUSED", 2, 2, 0);
+	draw_set_color(c_green);
+	draw_rectangle(_width / 2 - 9, _height / 2 - 9, _width / 2 + 9, _height / 2 + 9, false)
 }
-draw_set_alpha(1);
 #endregion
+
+draw_set_variables(_variables);

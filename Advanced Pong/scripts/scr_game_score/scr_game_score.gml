@@ -36,4 +36,5 @@ function tally_score(_ball) {
 	var _paddle = _ball.last_paddle;
 	global.paddle[_paddle.player_type].score += 1;
 	global.game_state = GAME_STATE.BETWEEN_POINTS;
+	audio_play_sound(snd_point_gain, 0, 0)
 }

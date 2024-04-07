@@ -34,7 +34,7 @@ function set_paddle(_instance, _side) {
 	};
 }
 
-/// @funcion					set_paddle(instance, side)
+/// @funcion					get_other_paddle(instance, side)
 /// @description				Sets the paddle
 /// @param {real.PADDLE_SIDE}	_side	the side to set the paddle on.
 /// @returns {id.instance}		the opposing side's paddle

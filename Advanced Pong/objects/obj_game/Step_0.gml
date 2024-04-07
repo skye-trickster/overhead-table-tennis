@@ -18,14 +18,12 @@ switch(global.game_state) {
 
 		break;
 	case GAME_STATE.BETWEEN_POINTS:
-		show_debug_log(true);
 		point_timer += DELTA_TIME;
 		show_debug_message(string(point_timer));
 		if (point_timer > time_between_points) {
 			serve_ball();
 			point_timer = 0;
 			global.game_state = GAME_STATE.PLAYING;
-			show_debug_log(false);
 		}
 		break;
 	case GAME_STATE.PAUSING:

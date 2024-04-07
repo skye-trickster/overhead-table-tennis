@@ -7,6 +7,7 @@ function move_ball() {
 	var _y = y + yspeed;
 	var _x = x + xspeed;
 
+	// bounce off of a wall
 	if (place_meeting(_x, _y, obj_wall)) {
 		var _bounce_amount = 0;
 		do {
@@ -16,10 +17,11 @@ function move_ball() {
 		_y -= _bounce_amount;
 
 		yspeed *= -1;
+		audio_play_sound(snd_wall_hit, 1, 0);
 	}
 
+	// bounce off of a paddle
 	var _paddle = instance_place(_x, _y, obj_paddle);
-
 	if (_paddle and _paddle.id != last_paddle) {
 
 		var _bounce_amount = 0;
@@ -40,6 +42,7 @@ function move_ball() {
 		xspeed = dcos(_theta) * current_speed * -sign(xspeed);
 		yspeed = dsin(_theta) * current_speed;	
 		last_paddle = _paddle.id;
+		audio_play_sound(snd_paddle_hit, 1, 0)
 	}
 
 	y = _y;
@@ -47,4 +50,4 @@ function move_ball() {
 
 }
 
-if (playing) move_ball();
+move_ball();

@@ -18,17 +18,19 @@ quit_timer = 0;
 point_timer = 0;
 
 function serve_ball(_center = false) {
-	var _ball = global.ball;
+	var _side = serving_side;
 	var _paddle = global.paddle[serving_side].id;
-	_ball.last_paddle = get_other_paddle(serving_side);
+	
+	global.ball.x = global.ball.starting_point;
+	global.ball.y = _center ? y : _paddle.y;
+	global.ball.depth = depth;
+	global.ball.last_paddle = get_other_paddle(_paddle.player_type);
 
-	_ball.reset_ball();
-	_ball.x = _ball.starting_point;
-	_ball.y = _center ? y : _paddle.y;
-	_ball.depth = depth;
-
-	var _angle = random_range(-_ball.return_angle / 2, _ball.return_angle / 2);
-	_ball.xspeed = dcos(_angle) * _ball.current_speed * sign(_paddle.x - x);
-	_ball.yspeed = dsin(_angle) * _ball.current_speed;
-	_ball.playing = true;
+	with (global.ball) {
+		reset_ball();
+		var _angle = random_range(-return_angle / 2, return_angle / 2);
+		xspeed = dcos(_angle) * current_speed * sign(_paddle.x - x);
+		yspeed = dsin(_angle) * current_speed;
+		playing = true;
+	}
 }
