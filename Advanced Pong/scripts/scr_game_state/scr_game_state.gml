@@ -6,11 +6,15 @@ enum GAME_STATE {
 	PAUSING,
 }
 
+enum PADDLE_SIDE {
+	LEFT,
+	RIGHT
+}
+
 global.game_state = GAME_STATE.NOT_SPECIFIED;
+
 global.game_object = noone;
-
-#macro GAME_PAUSED global.game_state == GAME_STATE.PAUSING
-
+global.ball = noone;
 global.paddle = {
 	"PADDLE_SIDE.LEFT": {
 		id: noone,
@@ -21,7 +25,6 @@ global.paddle = {
 		score: 0,
 	}
 };
-global.ball = noone;
 
 /// @funcion		set_paddle(instance, side)
 /// @description	Sets the paddle
@@ -30,7 +33,7 @@ global.ball = noone;
 function set_paddle(_instance, _side) {
 	global.paddle[_side] = {
 		id: _instance.id,
-		score: 0,
+		score: 10,
 	};
 }
 
@@ -40,9 +43,4 @@ function set_paddle(_instance, _side) {
 /// @returns {id.instance}		the opposing side's paddle
 function get_other_paddle(_side) {
 	return _side == PADDLE_SIDE.LEFT ? global.paddle[PADDLE_SIDE.RIGHT].id : global.paddle[PADDLE_SIDE.LEFT].id;	
-}
-
-enum PADDLE_SIDE {
-	LEFT,
-	RIGHT
 }

@@ -6,31 +6,34 @@ switch(global.game_state) {
 			if (not global.ball) {
 				global.ball = instance_create_depth(x, y, depth, obj_ball);	
 			}
+			// feather ignore GM2016
 			serve_ball();
 			global.game_state = GAME_STATE.PLAYING;
 		}
-		break;
+	break;
+
 	case GAME_STATE.PLAYING:
-		// Pause
+		// Pause if the pause button is pressed
 		if (INPUT_PAUSE_BUTTON_PRESSSED) {
 			global.game_state = GAME_STATE.PAUSING;
 		}
+	break;
 
-		break;
 	case GAME_STATE.BETWEEN_POINTS:
 		point_timer += DELTA_TIME;
-		show_debug_message(string(point_timer));
 		if (point_timer > time_between_points) {
 			serve_ball();
 			point_timer = 0;
 			global.game_state = GAME_STATE.PLAYING;
 		}
-		break;
+	break;
+
 	case GAME_STATE.PAUSING:
+		// resume if the pause button is pressed
 		if (INPUT_PAUSE_BUTTON_PRESSSED) {
 			global.game_state = GAME_STATE.PLAYING;
 		}
-		break;
+	break;
 }
 
 if (keyboard_check_pressed(vk_backspace)) {

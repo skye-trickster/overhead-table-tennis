@@ -5,6 +5,7 @@ var _variables = draw_store_variables();
 
 var _width = display_get_gui_width();
 var _height = display_get_gui_height();
+var _overlay_scale = 5;
 
 #region Score rendering
 draw_set_color(c_white);
@@ -56,23 +57,30 @@ if (global.paddle[PADDLE_SIDE.RIGHT].score or global.paddle[PADDLE_SIDE.RIGHT].s
 }
 #endregion
 
-#region Pause Overlay
-if (GAME_PAUSED) {
-	// Create black overlay box
-	var _alpha = GAME_PAUSED ? 0.5 : 0;
-	draw_set_color(c_black);
-	draw_set_alpha(_alpha);
-	draw_rectangle(0, 0, _width, _height, false);
+#region State-based Overlay
+switch(global.game_state) {
+	case GAME_STATE.MENU:
+		// TODO: create working
+	break;
+
+	#region Pause overlay
+	case GAME_STATE.PAUSING:
+		// Create black overlay box
+		var _alpha = GAME_PAUSED ? 0.5 : 0;
+		draw_set_color(c_black);
+		draw_set_alpha(_alpha);
+		draw_rectangle(0, 0, _width, _height, false);
 	
-	// create pause screen
-	draw_set_alpha(1);
-	draw_set_color(c_white);
-	draw_set_halign(fa_center);
-	draw_set_valign(fa_middle);
-	draw_text_transformed(_width / 2, _height / 2, "PAUSED", 2, 2, 0);
-	draw_set_color(c_green);
-	draw_rectangle(_width / 2 - 9, _height / 2 - 9, _width / 2 + 9, _height / 2 + 9, false)
+		// create pause screen
+		draw_set_alpha(1);
+		draw_set_color(c_white);
+		draw_set_halign(fa_center);
+		draw_set_valign(fa_middle);
+		draw_text_transformed(_width / 2, _height / 2, "PAUSED", _overlay_scale, _overlay_scale, 0);
+	break;
+	#endregion
 }
+
 #endregion
 
 draw_set_variables(_variables);
