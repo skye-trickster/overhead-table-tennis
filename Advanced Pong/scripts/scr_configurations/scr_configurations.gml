@@ -7,5 +7,5 @@ draw_set_font(global.font);
 /// @param {Real}	_v	Volume amount
 function audio_volume_set(_v) {
 	global.sound_volume = _v;
-	audio_group_set_gain(audiogroup_default, global.sound_volume, 0);
+	audio_group_set_gain(audiogroup_default, _v, 0);
 }

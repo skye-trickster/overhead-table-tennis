@@ -33,7 +33,7 @@ global.paddle = {
 function set_paddle(_instance, _side) {
 	global.paddle[_side] = {
 		id: _instance.id,
-		score: 10,
+		score: 0,
 	};
 }
 

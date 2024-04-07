@@ -60,25 +60,12 @@ if (global.paddle[PADDLE_SIDE.RIGHT].score or global.paddle[PADDLE_SIDE.RIGHT].s
 #region State-based Overlay
 switch(global.game_state) {
 	case GAME_STATE.MENU:
-		// TODO: create working
+		global.main_menu.render(_width / 2, _height / 2);
 	break;
 
-	#region Pause overlay
 	case GAME_STATE.PAUSING:
-		// Create black overlay box
-		var _alpha = GAME_PAUSED ? 0.5 : 0;
-		draw_set_color(c_black);
-		draw_set_alpha(_alpha);
-		draw_rectangle(0, 0, _width, _height, false);
-	
-		// create pause screen
-		draw_set_alpha(1);
-		draw_set_color(c_white);
-		draw_set_halign(fa_center);
-		draw_set_valign(fa_middle);
-		draw_text_transformed(_width / 2, _height / 2, "PAUSED", _overlay_scale, _overlay_scale, 0);
+		global.pause_menu.render(_width / 2, _height / 2);
 	break;
-	#endregion
 }
 
 #endregion

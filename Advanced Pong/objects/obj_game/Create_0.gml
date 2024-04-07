@@ -17,6 +17,15 @@ serving_side = PADDLE_SIDE.LEFT;
 quit_timer = 0;
 point_timer = 0;
 
+function start_game() {
+	if (not global.ball) {
+		global.ball = instance_create_depth(x, y, depth, obj_ball);	
+	}
+
+	serve_ball();
+	global.game_state = GAME_STATE.PLAYING;
+}
+
 function serve_ball(_center = false) {
 	var _side = serving_side;
 	var _paddle = global.paddle[serving_side].id;

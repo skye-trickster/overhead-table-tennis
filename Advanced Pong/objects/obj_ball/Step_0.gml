@@ -42,7 +42,7 @@ function move_ball() {
 		xspeed = dcos(_theta) * current_speed * -sign(xspeed);
 		yspeed = dsin(_theta) * current_speed;	
 		last_paddle = _paddle.id;
-		audio_play_sound(snd_paddle_hit, 1, 0)
+		audio_play_sound(snd_paddle_hit, 1, 0);
 	}
 
 	y = _y;
