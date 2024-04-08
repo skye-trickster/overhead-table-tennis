@@ -30,8 +30,8 @@ function check_effect() {
 		return SCORE_EFFECT.RIGHT_WIN;
 	}
 	
-	if (_left_score == 10) return _difference ? SCORE_EFFECT.LEFT_MATCH_POINT : SCORE_EFFECT.DEUCE;
-	if (_right_score == 10) return _difference ? SCORE_EFFECT.RIGHT_MATCH_POINT : SCORE_EFFECT.DEUCE;
+	if (_left_score == 10) return _difference == 0 ? SCORE_EFFECT.DEUCE : SCORE_EFFECT.LEFT_MATCH_POINT;
+	if (_right_score == 10) return _difference == 0 ? SCORE_EFFECT.DEUCE : SCORE_EFFECT.RIGHT_MATCH_POINT;
 	
 
 	return SCORE_EFFECT.NONE;
