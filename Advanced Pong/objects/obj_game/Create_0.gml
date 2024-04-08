@@ -73,7 +73,7 @@ function serve_ball(_center = false) {
 
 function switch_serve() {
 	if (switch_sides) {
-		serving_side = PADDLE_SIDE.LEFT ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
+		serving_side = serving_side == PADDLE_SIDE.LEFT ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
 	}
 
 	switch_sides = not switch_sides;
