@@ -44,6 +44,7 @@ function reset_game() {
 		instance_destroy(global.ball);
 		global.ball = noone;
 	}
+	// feather ignore GM1041
 	for (var _i = 0; _i < array_length(global.paddle); _i++) {
 		global.paddle[_i].score = 0;
 		global.paddle[_i].id.y = room_height / 2;

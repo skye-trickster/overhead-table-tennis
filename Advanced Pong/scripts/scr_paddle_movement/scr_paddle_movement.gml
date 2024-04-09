@@ -17,13 +17,29 @@ function paddle_move_automated() {
 				break;
 
 				case GAME_STATE.PLAYING:
-					// move to the ball when the paddle in play
+					// find the ball if the target is suspected to have changed
 					if (automated_variables.target == undefined or sign(global.ball.yspeed) != automated_variables.ball_direction) {
 						paddle_find_ball_target();
 					}
-					paddle_move_point(automated_variables.target);
+					
+					// start closing in if you're getting too close to the wire
+					if (too_close_to_ball() and automated_variables.closing_in == false) {
+						refresh_close_in_chance(true);
+					}
+					
+					if (automated_variables.closing_in) {
+						paddle_move_point(automated_variables.target);
+						automated_variables.closing_in_timer += DELTA_TIME;
+						// refresh close in if the timer is up
+						if (automated_variables.closing_in_timer > automated_variables.closing_in_max_timer) {
+							refresh_close_in_chance(false);
+						}
+					} else {
+						paddle_follow_ball();	
+					}
 					
 					if (global.ball.last_paddle == id) {
+						automated_variables.closing_in = false
 						automated_variables.state = PADDLE_AI_STATE.SERVING;
 					}
 				break;
@@ -38,6 +54,23 @@ function paddle_move_automated() {
 			}
 		break;
 	}
+}
+
+/// @function		too_close_to_ball()
+///	@self			obj_paddle
+/// @description	checks to see if the ball is approaching the paddle too quickly and has to close in
+/// @returns {Bool}	true if the ball is approaching too close. false otherwise
+/// @pure
+function too_close_to_ball() {
+	return automated_variables.ball_distance == 0 or abs(x - global.ball.x) < abs(global.ball.xspeed * 2) * automated_variables.ball_distance;
+}
+
+/// @function		refresh_close_in_chance(guarantee)
+/// @param {Bool}	_guarantee	whether or not the guarantee that the paddle should close in on the ball.
+/// @description	refreshes the closing in timer and gives a chance of whether or not the paddle should refresh it closing in
+function refresh_close_in_chance(_guarantee = false) {
+	automated_variables.closing_in = _guarantee or random(1) > automated_variables.closing_in_refresh_chance;
+	automated_variables.closing_in_timer = 0;
 }
 
 /// @function					paddle_find_ball_target()
@@ -93,23 +126,34 @@ function paddle_find_ball_target() {
 			_target = WALL_HEIGHT + abs(_distance_y);
 		}
 	}
+	
+	// calculate how long it will take to get to the point
+	_time = (_target - y) / paddle_speed;
+	// calculate how far away the ball needs to be to get to the point
+	_distance_x = abs(_time * global.ball.xspeed);
 
+	// refresh close in chance if it's set to true on bounce
+	if (automated_variables.closing_in == true) {
+		refresh_close_in_chance();
+	}
+
+	// set AI variables
 	automated_variables.target = _target;
 	automated_variables.bounces = _bounces;
 	automated_variables.ball_direction = sign(global.ball.yspeed);
+	automated_variables.ball_distance = _distance_x;
 }
 
 function paddle_follow_ball() {
-	var _vertical = 0;
-	automated_variables.speed = 0;
 	var _distance = global.ball.y - y;
 	if (abs(_distance) > paddle_speed) {
-		_vertical = sign(_distance);
-		automated_variables.speed = sign(_distance);
+		automated_variables.speed = lerp(automated_variables.speed, sign(_distance), automated_variables.lerp_amount);
+	} else {
+		automated_variables.speed = lerp(automated_variables.speed, 0, automated_variables.lerp_amount);	
 	}
-	
-	var _y = y + _vertical * paddle_speed;
+	var _y = y + automated_variables.speed * paddle_speed;
 	var _half_height = sprite_height / 2;
+
 	y = clamp(_y, _half_height, room_height - _half_height);
 }
 
@@ -117,7 +161,7 @@ function paddle_move_point(_target) {
 	var _distance = _target - y;
 	if (abs(_distance) < paddle_speed) {
 		y = _target;
-		automated_variables.speed = 0;
+		automated_variables.speed = lerp(automated_variables.speed, 0, automated_variables.lerp_amount);
 		return;
 	}
 	automated_variables.speed = lerp(automated_variables.speed, sign(_distance), automated_variables.lerp_amount);
