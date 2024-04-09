@@ -69,6 +69,12 @@ function serve_ball(_center = false) {
 		yspeed = dsin(_angle) * current_speed;
 		playing = true;
 	}
+	
+	with(_paddle) {
+		if (automated) {
+			paddle_find_ball_target();
+		}
+	}
 }
 
 function switch_serve() {

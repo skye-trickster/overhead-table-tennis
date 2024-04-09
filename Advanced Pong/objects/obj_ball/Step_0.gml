@@ -41,7 +41,7 @@ function move_ball() {
 		var _distance_percent = (y - _paddle.y) / ((_paddle.sprite_height / 2) + (sprite_height / 2));
 		var _theta = clamp(_distance_percent * return_angle, -return_angle, return_angle);
 		xspeed = dcos(_theta) * current_speed * -sign(xspeed);
-		yspeed = dsin(_theta) * current_speed;	
+		yspeed = dsin(_theta) * current_speed;
 		last_paddle = _paddle.id;
 		audio_play_sound(snd_paddle_hit, 1, 0);
 	}
