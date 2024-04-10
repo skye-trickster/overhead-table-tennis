@@ -2,28 +2,44 @@
 
 #region BUTTON_MACROS
 
-#macro LEFT_UP_BUTTON ord("W")
-#macro LEFT_DOWN_BUTTON ord("S")
+#macro UP_BUTTON ord("W")
+#macro DOWN_BUTTON ord("S")
+#macro LEFT_BUTTON ord("A")
+#macro RIGHT_BUTTON ord("D")
 
-#macro RIGHT_UP_BUTTON vk_up
-#macro RIGHT_DOWN_BUTTON vk_down
+#macro ALTERNATE_UP_BUTTON vk_up
+#macro ALTERNATE_DOWN_BUTTON vk_down
+#macro ALTERNATE_LEFT_BUTTON vk_left
+#macro ALTERNATE_RIGHT_BUTTON vk_right
 
 #macro CONFIRM_BUTTON vk_enter
 #macro PAUSE_BUTTON vk_escape
 
 #endregion
 
-#macro LEFT_INPUT_UP_PRESSED keyboard_check_pressed(LEFT_UP_BUTTON)
-#macro LEFT_INPUT_UP keyboard_check(LEFT_UP_BUTTON)
+#macro LEFT_INPUT_UP_PRESSED keyboard_check_pressed(UP_BUTTON)
+#macro LEFT_INPUT_UP keyboard_check(UP_BUTTON)
 
-#macro LEFT_INPUT_DOWN_PRESSED keyboard_check_pressed(LEFT_DOWN_BUTTON)
-#macro LEFT_INPUT_DOWN keyboard_check(LEFT_DOWN_BUTTON)
+#macro LEFT_INPUT_DOWN_PRESSED keyboard_check_pressed(DOWN_BUTTON)
+#macro LEFT_INPUT_DOWN keyboard_check(DOWN_BUTTON)
 
-#macro RIGHT_INPUT_UP_PRESSED keyboard_check_pressed(RIGHT_UP_BUTTON)
-#macro RIGHT_INPUT_UP keyboard_check(RIGHT_UP_BUTTON)
+#macro LEFT_INPUT_LEFT_PRESSED keyboard_check_pressed(LEFT_BUTTON)
+#macro LEFT_INPUT_LEFT keyboard_check(LEFT_BUTTON)
 
-#macro RIGHT_INPUT_DOWN_PRESSED keyboard_check_pressed(RIGHT_DOWN_BUTTON)
-#macro RIGHT_INPUT_DOWN keyboard_check(RIGHT_DOWN_BUTTON)
+#macro LEFT_INPUT_RIGHT_PRESSED keyboard_check_pressed(RIGHT_BUTTON)
+#macro LEFT_INPUT_RIGHT keyboard_check(RIGHT_BUTTON)
+
+#macro RIGHT_INPUT_UP_PRESSED keyboard_check_pressed(ALTERNATE_UP_BUTTON)
+#macro RIGHT_INPUT_UP keyboard_check(ALTERNATE_UP_BUTTON)
+
+#macro RIGHT_INPUT_DOWN_PRESSED keyboard_check_pressed(ALTERNATE_DOWN_BUTTON)
+#macro RIGHT_INPUT_DOWN keyboard_check(ALTERNATE_DOWN_BUTTON)
+
+#macro RIGHT_INPUT_LEFT_PRESSED keyboard_check_pressed(ALTERNATE_LEFT_BUTTON)
+#macro RIGHT_INPUT_LEFT keyboard_check(ALTERNATE_LEFT_BUTTON)
+
+#macro RIGHT_INPUT_RIGHT_PRESSED keyboard_check_pressed(ALTERNATE_RIGHT_BUTTON)
+#macro RIGHT_INPUT_RIGHT keyboard_check(ALTERNATE_RIGHT_BUTTON)
 
 #macro INPUT_CONFIRM_BUTTON_PRESSED keyboard_check_pressed(CONFIRM_BUTTON)
 #macro INPUT_PAUSE_BUTTON_PRESSSED keyboard_check_pressed(PAUSE_BUTTON)
@@ -34,5 +50,7 @@
 
 #macro INPUT_UP_PRESSED (LEFT_INPUT_UP_PRESSED or RIGHT_INPUT_UP_PRESSED)
 #macro INPUT_DOWN_PRESSED (LEFT_INPUT_DOWN_PRESSED or RIGHT_INPUT_DOWN_PRESSED)
+#macro INPUT_LEFT_PRESSED (LEFT_INPUT_LEFT_PRESSED or RIGHT_INPUT_LEFT_PRESSED)
+#macro INPUT_RIGHT_PRESSED (LEFT_INPUT_RIGHT_PRESSED or RIGHT_INPUT_RIGHT_PRESSED)
 
 #endregion

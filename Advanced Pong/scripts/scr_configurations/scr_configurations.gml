@@ -7,7 +7,7 @@ global.settings = {
 }
 
 font_add_enable_aa(false);
-global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.", true, 2);
+global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.:<>", true, 2);
 draw_set_font(global.font);
 
 /// @function			audio_volume_set(volume)
@@ -26,5 +26,17 @@ function audio_volume_set(_v) {
 function check_global_variable(_name) {
 	if (variable_global_exists(_name)) return variable_global_get(_name);
 	
+	return undefined;
+}
+
+/// @function			check_struct_variable(struct, name)
+/// @description		Gets the struct's variable if it exists. Returns undefined otherwise.
+/// @param {Struct}		_struct			The name of the struct
+/// @param {String}		_variable_name	The name of the variable
+/// @returns			The variable's value if it exists. Undefined otherwise
+/// @pure
+function check_struct_variable(_struct, _variable_name) {
+	if(variable_struct_exists(_struct, _variable_name)) return variable_struct_get(_struct, _variable_name);
+
 	return undefined;
 }
