@@ -35,9 +35,9 @@ function start_game() {
 	}
 	if (global.automation) {
 		set_ai_difficulty();
-		if (global.flip_sides) {
-			serving_side = serving_side == PADDLE_SIDE.LEFT ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
-		}
+		serving_side = global.flip_sides ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
+	} else {
+		serving_side = PADDLE_SIDE.LEFT;	
 	}
 	global.ball.initial_speed = global.settings.ball_initial_speed;
 	global.ball.speed_multiplier = global.settings.ball_multiplier;
@@ -58,7 +58,10 @@ function set_ai_difficulty() {
 	var _high_refresh_chance = 0.95;
 	
 	var _ai_side = global.flip_sides ? PADDLE_SIDE.LEFT : PADDLE_SIDE.RIGHT;
-	
+	var _player_side = global.flip_sides ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
+
+	global.paddle[_player_side].id.automated = false;
+
 	with(global.paddle[_ai_side].id) {
 		automated = true;
 		automated_variables.difficulty = _difficulty;
