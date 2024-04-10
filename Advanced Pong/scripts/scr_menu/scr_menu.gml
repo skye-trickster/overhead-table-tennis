@@ -1,24 +1,35 @@
 enum MENU_TYPE {
 	MENU_NODE,
-	TOGGLE
+	TOGGLE,
+	SCALE
 }
 
 #macro MENU_UNSELECTED_COLOR c_white
 #macro MENU_SELECTED_COLOR c_lime
 
-/// @function		MenuNode(text, value, [type], [options])
-/// @param {String}	_text		The the menu node's text information
-/// @param {String}	_value		The return value of the menu item
-/// @param {Real}	_type		The menu type that's used
-function MenuNode(_text, _value, _type = MENU_TYPE.MENU_NODE, _options = {}) constructor {
+/// @function					MenuNode(text, value, [type], [options])
+/// @param {String}				_text		The the menu node's text information
+/// @param {Real.MENU_TYPE}		_type		The menu type that's used
+/// @param {Struct}				_options	The list of options for that menu type
+function MenuNode(_text, _type, _options) constructor {
 	text = string_upper(_text);
-	return_value = _value;
 	type = _type;
 	options = {};
+
+	function set_scale_value(_value) {
+		options.current_value = _value;
+		script_execute(options.change_function, _value);
+	}
 
 	// TODO: throw a custom error if the options doesn't have the desired features.
 	// set options depending on the menu type
 	switch(type) {
+		case MENU_TYPE.MENU_NODE:
+			options = {
+				return_value: check_struct_variable(_options, "return_value") ?? "",	
+			}
+		break;
+		
 		case MENU_TYPE.TOGGLE:
 			options = {
 				enabled_text: string_upper(check_struct_variable(_options, "enabled_text") ?? ""),
@@ -26,12 +37,25 @@ function MenuNode(_text, _value, _type = MENU_TYPE.MENU_NODE, _options = {}) con
 				global_variable: check_struct_variable(_options, "global_variable") ?? "",
 			};
 		break;
+
+		case MENU_TYPE.SCALE:
+			options = {
+				minimum: _options.minimum,
+				maximum: _options.maximum,
+				default_value: _options.default_value,
+				current_value: _options.default_value,
+				change_function: _options.change_function,
+				loop: check_struct_variable(_options, "loop") ?? false,
+			}
+			set_scale_value(options.current_value);
+		break;
 	};
 
 	///	@function					render(x, y, text_scale, color, padding)
 	///	@description				Render the text for the menu node.
 	/// @self						Struct.MenuNode
-	function render(_x, _y, _text_scale, _color, _padding) {
+	function render(_x, _y, _text_scale, _color, _padding, _selected = false) {
+		var _text = ""
 		switch(type) {
 			case MENU_TYPE.MENU_NODE:
 				draw_set_halign(fa_center);
@@ -43,9 +67,33 @@ function MenuNode(_text, _value, _type = MENU_TYPE.MENU_NODE, _options = {}) con
 				draw_text_transformed_color(_x, _y, string(text) + ": ", _text_scale, _text_scale, 0, MENU_UNSELECTED_COLOR, MENU_UNSELECTED_COLOR, MENU_UNSELECTED_COLOR, MENU_UNSELECTED_COLOR, 1);
 
 				draw_set_halign(fa_left);
-				var _text = check_global_variable(options.global_variable) == true ? options.enabled_text : options.disabled_text;
+				_text = check_global_variable(options.global_variable) == true ? options.enabled_text : options.disabled_text;
 				draw_text_transformed_color(_x, _y, _text, _text_scale, _text_scale, 0, _color, _color, _color, _color, 1);
 			break;
+			
+			case MENU_TYPE.SCALE:
+				draw_set_halign(fa_right);
+				draw_text_transformed_color(_x, _y, string(text) + ": ", _text_scale, _text_scale, 0, MENU_UNSELECTED_COLOR, MENU_UNSELECTED_COLOR, MENU_UNSELECTED_COLOR, MENU_UNSELECTED_COLOR, 1);
+
+				draw_set_halign(fa_left);
+				_text = string(options.current_value);
+				if (_selected and options.current_value > options.minimum) {
+					_text = "< " + _text;	
+				} else {
+					_text = "  " + _text;	
+				}
+				if (_selected and options.current_value < options.maximum) {
+					_text = _text + " >";	
+				} else {
+					_text = _text + "  ";	
+				}
+				
+				draw_text_transformed_color(_x, _y, _text, _text_scale, _text_scale, 0, _color, _color, _color, _color, 1);			
+			break;
+			
+			default:
+				draw_set_halign(fa_center);
+				draw_text_transformed_color(_x, _y, text, _text_scale, _text_scale, 0, _color, _color, _color, _color, 1);
 		}
 	}
 	
@@ -55,12 +103,23 @@ function MenuNode(_text, _value, _type = MENU_TYPE.MENU_NODE, _options = {}) con
 	/// @self						Struct.MenuNode
 	function on_select() {
 		switch(type) {
+			case MENU_TYPE.MENU_NODE:
+				return options.return_value;
+
 			case MENU_TYPE.TOGGLE:
 				var _value = check_global_variable(options.global_variable) ?? false;
 				variable_global_set(options.global_variable, (not _value));
 				return (not _value);
-			default:
-				return return_value;
+				
+			case MENU_TYPE.SCALE:
+				if (options.loop) {
+					if (options.current_value == options.maximum) {
+						set_scale_value(options.minimum)
+					} else {
+						raise_value();	
+					}
+				}
+			break;
 		}
 	}
 	
@@ -72,7 +131,11 @@ function MenuNode(_text, _value, _type = MENU_TYPE.MENU_NODE, _options = {}) con
 			case MENU_TYPE.TOGGLE:
 				var _value = check_global_variable(options.global_variable) ?? false;
 				variable_global_set(options.global_variable, (not _value));
-				break;	
+			break;
+			case MENU_TYPE.SCALE:
+				if (options.current_value > options.minimum) {
+					set_scale_value(options.current_value - 1);	
+				}
 		}
 	}
 
@@ -84,7 +147,12 @@ function MenuNode(_text, _value, _type = MENU_TYPE.MENU_NODE, _options = {}) con
 			case MENU_TYPE.TOGGLE:
 				var _value = check_global_variable(options.global_variable) ?? false;
 				variable_global_set(options.global_variable, (not _value));
-				break;
+			break;
+			case MENU_TYPE.SCALE:
+				if (options.current_value < options.maximum) {
+					set_scale_value(options.current_value + 1);
+				}
+			break;
 		}
 	}
 }
@@ -179,10 +247,11 @@ function Menu(_node_list, _title = GM_project_filename, _overlay = true, _text_s
 		
 		for (var _i = 0; _i < array_length(nodes); ++_i) {
 			var _color = MENU_UNSELECTED_COLOR;
-			if (selected == _i) {
+			var _is_selected = selected == _i;
+			if (_is_selected) {
 				_color = MENU_SELECTED_COLOR;
 			}
-			nodes[_i].render(_x, _y + (_gap * _i) - _offset, text_scale, _color, padding);
+			nodes[_i].render(_x, _y + (_gap * _i) - _offset, text_scale, _color, padding, _is_selected);
 		}
 	}
 	
@@ -207,22 +276,48 @@ function Menu(_node_list, _title = GM_project_filename, _overlay = true, _text_s
 	}
 	
 	function reset() {
-		selected = 0;	
+		selected = 0;
+		return_value = "";
 	}
 }
 
 var _main_menu_items = [
-		new MenuNode("Start Game", "start"),
-		new MenuNode("Game Mode", "", MENU_TYPE.TOGGLE, {enabled_text: "vs CPU", disabled_text: "2 player game", global_variable: "automation" }),
+		new MenuNode("Start Game", MENU_TYPE.MENU_NODE, {
+			return_value: "start"
+		}),
+		new MenuNode("Game Mode", MENU_TYPE.TOGGLE, {
+			enabled_text: "vs CPU",
+			disabled_text: "2 player game",
+			global_variable: "automation"
+		}),
+		new MenuNode("Player Side", MENU_TYPE.TOGGLE, {
+			enabled_text: "Right",
+			disabled_text: "Left",
+			global_variable: "flip_sides"
+		}),
+		new MenuNode("Difficulty", MENU_TYPE.SCALE, {
+			minimum: 1,
+			maximum: 4,
+			default_value: 2,
+			change_function: set_difficulty,
+			loop: true
+		}),
+		new MenuNode("Volume", MENU_TYPE.SCALE, {
+			minimum: 0,
+			maximum: 10,
+			default_value: 10,
+			change_function: audio_volume_set,
+			loop: false
+		}),
 	];
 var _pause_menu_items = [
-		new MenuNode("Resume", "resume"),
-		new MenuNode("Return to menu", "menu"),
+		new MenuNode("Resume", MENU_TYPE.MENU_NODE, {return_value: "resume"} ),
+		new MenuNode("Return to menu", MENU_TYPE.MENU_NODE, {return_value: "menu"}),
 	];
 
 if (NOT_ON_BROWSER) {
 	// Add exit node to the menu items when not on a browser
-	var _exit_node = new MenuNode("Exit Game", "exit")
+	var _exit_node = new MenuNode("Exit Game", MENU_TYPE.MENU_NODE, {return_value: "exit"})
 	array_push(_main_menu_items, _exit_node);
 	array_push(_pause_menu_items, _exit_node);
 }

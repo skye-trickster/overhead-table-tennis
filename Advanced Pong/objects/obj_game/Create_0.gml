@@ -34,7 +34,10 @@ function start_game() {
 		global.ball = instance_create_depth(x, y, depth, obj_ball);
 	}
 	if (global.automation) {
-		set_ai_difficulty();	
+		set_ai_difficulty();
+		if (global.flip_sides) {
+			serving_side = serving_side == PADDLE_SIDE.LEFT ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
+		}
 	}
 	global.ball.initial_speed = global.settings.ball_initial_speed;
 	global.ball.speed_multiplier = global.settings.ball_multiplier;
@@ -54,7 +57,9 @@ function set_ai_difficulty() {
 	var _low_refresh_chance = 0.5;
 	var _high_refresh_chance = 0.95;
 	
-	with(global.paddle[PADDLE_SIDE.RIGHT].id) {
+	var _ai_side = global.flip_sides ? PADDLE_SIDE.LEFT : PADDLE_SIDE.RIGHT;
+	
+	with(global.paddle[_ai_side].id) {
 		automated = true;
 		automated_variables.difficulty = _difficulty;
 

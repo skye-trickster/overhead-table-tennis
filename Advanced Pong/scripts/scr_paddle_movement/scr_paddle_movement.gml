@@ -245,10 +245,10 @@ function paddle_move_player() {
 	
 	switch(player_type) {
 		case PADDLE_SIDE.LEFT:
-			_vertical = LEFT_INPUT_VERTICAL;
+			_vertical = global.automation ? INPUT_VERTICAL : LEFT_INPUT_VERTICAL;
 			break;
 		case PADDLE_SIDE.RIGHT:
-			_vertical = RIGHT_INPUT_VERTICAL;
+			_vertical = global.automation ? INPUT_VERTICAL : RIGHT_INPUT_VERTICAL;
 			break;
 	}
 	
