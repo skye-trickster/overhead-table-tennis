@@ -79,12 +79,12 @@ if (global.paddle[PADDLE_SIDE.RIGHT].score or global.paddle[PADDLE_SIDE.RIGHT].s
 #region State-based Overlay
 switch(global.game_state) {
 	case GAME_STATE.MENU:
-		global.main_menu.render(_width / 2, _height / 2);
+		global.main_menu.render();
 		draw_version_number();
 	break;
 
 	case GAME_STATE.PAUSING:
-		global.pause_menu.render(_width / 2, _height / 2);
+		global.pause_menu.render();
 	break;
 }
 

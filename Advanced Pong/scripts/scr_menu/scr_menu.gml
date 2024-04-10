@@ -7,6 +7,10 @@ enum MENU_TYPE {
 #macro MENU_UNSELECTED_COLOR c_white
 #macro MENU_SELECTED_COLOR c_lime
 
+#macro TITLE_HEIGHT display_get_gui_height() / 6
+#macro MENU_CENTER display_get_gui_width() / 2
+#macro MENU_MIDDLE display_get_gui_height() / 2
+
 /// @function					MenuNode(text, value, [type], [options])
 /// @param {String}				_text		The the menu node's text information
 /// @param {Real.MENU_TYPE}		_type		The menu type that's used
@@ -227,23 +231,21 @@ function Menu(_node_list, _title = GM_project_filename, _overlay = true, _text_s
 	///	@description	Renders the title and each menu item
 	/// @param {Real}	_x	The horizontal position of the start of the menu options
 	/// @param {Real}	_y	The vertical position of the start of the menu options
-	function render(_x, _y) {
-		var _width = display_get_gui_width();
-		var _height = display_get_gui_height();
+	function render(_x = MENU_CENTER, _y = MENU_MIDDLE) {
 		if (overlay) {
 			draw_set_color(c_black);
 			draw_set_alpha(0.75);
-			draw_rectangle(0, 0, _width, _height, false);	
+			draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);	
 		}
 
 		draw_set_color(MENU_UNSELECTED_COLOR);
 		draw_set_alpha(1);
 		
-		draw_text_transformed(_width / 2, _height / 6, title, text_scale, text_scale, 0);
+		draw_text_transformed(MENU_CENTER, TITLE_HEIGHT, title, text_scale, text_scale, 0);
 
 		var _gap = string_height("TEST") * text_scale + padding * 2 + margin * 2 + 2;
 		
-		var _offset = _gap * array_length(nodes) / 2;
+		var _offset = min(_gap * array_length(nodes) / 2, TITLE_HEIGHT);
 		
 		for (var _i = 0; _i < array_length(nodes); ++_i) {
 			var _color = MENU_UNSELECTED_COLOR;
