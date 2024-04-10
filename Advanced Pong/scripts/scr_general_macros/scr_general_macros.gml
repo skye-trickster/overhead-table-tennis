@@ -6,6 +6,8 @@
 
 #macro DEBUG true
 
+// room position macros
 #macro WALL_HEIGHT (8)
 #macro BOTTOM_POSITION (room_height - WALL_HEIGHT - 8)
 #macro FIELD_HEIGHT (room_height - (2 * WALL_HEIGHT) - 16)
+#macro MIDDLE (room_height / 2)

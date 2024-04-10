@@ -1,5 +1,10 @@
 global.sound_volume = 1;
 global.automation = true;
+global.difficulty = PADDLE_AI_DIFFICULTY.LOW;
+global.settings = {
+	ball_initial_speed: 3,
+	ball_multiplier: 0.1,
+}
 
 font_add_enable_aa(false);
 global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.", true, 2);

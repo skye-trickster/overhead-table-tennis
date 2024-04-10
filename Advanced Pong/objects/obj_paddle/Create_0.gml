@@ -3,6 +3,7 @@
 set_paddle(self, player_type);
 
 automated_variables = {
+	difficulty: PADDLE_AI_DIFFICULTY.MEDIUM,			// paddle AI difficulty. Higher numbers mean more difficult
 	target: undefined,
 	ball_direction: -1,
 	bounces: 0,

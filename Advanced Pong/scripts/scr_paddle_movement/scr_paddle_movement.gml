@@ -3,10 +3,39 @@ enum PADDLE_AI_STATE {
 	SERVING		// when the ball is going away from the paddle
 }
 
-/// @description	Computer-powered movement
-/// @self			obj_paddle
-function paddle_move_automated() {
-	
+enum PADDLE_AI_DIFFICULTY {
+	VERY_LOW = 0,		// the simplest AI difficulty
+	LOW = 1,			// the simplest AI difficulty but without lerp
+	MEDIUM_LOW = 2,		// the more sophisticated difficulty
+	MEDIUM = 3,			// the more sophisticated difficulty
+}
+
+function paddle_easy_behavior() {
+	switch(automated_variables.state) {
+		case PADDLE_AI_STATE.RECEIVING:
+			switch(global.game_state) {
+				case GAME_STATE.BETWEEN_POINTS:
+					paddle_move_point(MIDDLE);
+				break;
+				
+				case GAME_STATE.PLAYING:
+					// just follow the ball position
+					paddle_follow_ball();
+				break;
+			}
+		break;
+		case PADDLE_AI_STATE.SERVING:
+			// go to the midle to better get a handle on things
+			paddle_move_point(MIDDLE);
+			if (global.ball.last_paddle != id) {
+				paddle_find_ball_target();
+				automated_variables.state = PADDLE_AI_STATE.RECEIVING;	
+			}
+		break;
+	}
+}
+
+function paddle_medium_behavior() {
 	switch(automated_variables.state) {
 		case PADDLE_AI_STATE.RECEIVING:
 			switch (global.game_state) {
@@ -37,10 +66,11 @@ function paddle_move_automated() {
 					} else {
 						paddle_follow_ball();	
 					}
-					
+
+					// reset if it detects that it hit the ball
 					if (global.ball.last_paddle == id) {
-						automated_variables.closing_in = false
-						automated_variables.state = PADDLE_AI_STATE.SERVING;
+						automated_variables.closing_in = false;
+						automated_variables.target = undefined;
 					}
 				break;
 			}
@@ -49,7 +79,42 @@ function paddle_move_automated() {
 		case PADDLE_AI_STATE.SERVING:
 			paddle_move_point(room_height / 2);
 			if (global.ball.last_paddle != id) {
+				// find the ball target when switching
 				paddle_find_ball_target();
+			}
+		break;
+	}
+}
+
+/// @description	Computer-powered movement based on difficulty
+/// @self			obj_paddle
+function paddle_move_automated() {
+	switch(automated_variables.difficulty) {
+		case PADDLE_AI_DIFFICULTY.VERY_LOW:
+		case PADDLE_AI_DIFFICULTY.LOW:
+			paddle_easy_behavior();
+		break;
+		
+		case PADDLE_AI_DIFFICULTY.MEDIUM_LOW:
+		case PADDLE_AI_DIFFICULTY.MEDIUM:
+			paddle_medium_behavior();
+		break;
+		
+		default:
+			paddle_easy_behavior();
+		break;
+	}
+	
+	// common behaviors between the difficulties. used for state switching
+	switch(automated_variables.state) {
+		case PADDLE_AI_STATE.RECEIVING:
+			if (global.ball.last_paddle == id) {
+				automated_variables.state = PADDLE_AI_STATE.SERVING;
+			}
+		break;
+		
+		case PADDLE_AI_STATE.SERVING:
+			if (global.ball.last_paddle != id) {
 				automated_variables.state = PADDLE_AI_STATE.RECEIVING;	
 			}
 		break;
@@ -73,8 +138,9 @@ function refresh_close_in_chance(_guarantee = false) {
 	automated_variables.closing_in_timer = 0;
 }
 
-/// @function					paddle_find_ball_target()
-/// @self						obj_paddle
+/// @function		paddle_find_ball_target()
+/// @description	calculate's the ball intended y-position based on its speed and sets that data
+/// @self			obj_paddle
 function paddle_find_ball_target() {
 	// calculate the horizontal distance between the ball and the player. 
 	var _distance_x = x - global.ball.x;
