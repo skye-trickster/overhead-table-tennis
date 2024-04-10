@@ -2,23 +2,19 @@
 
 switch(global.game_state) {
 	case GAME_STATE.MENU:
-		if (INPUT_UP_PRESSED) {
-			global.main_menu.previous();
-		} else if (INPUT_DOWN_PRESSED) {
-			global.main_menu.next();
-		}
-		if(INPUT_CONFIRM_BUTTON_PRESSED) {
-			switch(global.main_menu.select()) {
-				case "start":
-					// Feather ignore GM2016
-					start_game();
-					global.main_menu.selected = 0;
-				break;
+		switch(global.main_menu.navigate()) {
+			case "start":
+				// start the game
+				// Feather ignore GM2016
+				start_game();
+				global.main_menu.reset();
+			break;
 
-				case "exit":
-					end_game();
-				break;
-			}
+			case "exit":
+				end_game();
+			break;
+			
+			// do nothing otherwise
 		}
 	break;
 
@@ -30,6 +26,7 @@ switch(global.game_state) {
 	break;
 
 	case GAME_STATE.BETWEEN_POINTS:
+		// TODO: fix issue where you can't pause in between points
 		point_timer += DELTA_TIME;
 		if (point_timer > time_between_points) {
 			switch_serve();
@@ -37,32 +34,30 @@ switch(global.game_state) {
 			point_timer = 0;
 			global.game_state = GAME_STATE.PLAYING;
 		}
+
 	break;
 
 	case GAME_STATE.PAUSING:
 		// resume if the pause button is pressed
 		if (INPUT_PAUSE_BUTTON_PRESSSED) {
 			resume_game();
+			global.pause_menu.reset();
+			break;
 		}
 		
-		if (INPUT_UP_PRESSED) {
-			global.pause_menu.previous();
-		} else if (INPUT_DOWN_PRESSED) {
-			global.pause_menu.next();
-		} else if(INPUT_CONFIRM_BUTTON_PRESSED) {
-			switch(global.pause_menu.select()) {
-				case "resume":
-					resume_game();
-				break;
+		switch(global.pause_menu.navigate()) {
+			case "resume":
+				resume_game();
+				global.pause_menu.reset();
+			break;
 				
-				case "menu":
-					reset_game();
-				break;
+			case "menu":
+				reset_game();
+			break;
 
-				case "exit":
-					end_game();
-				break;
-			}
+			case "exit":
+				end_game();
+			break;
 		}
 	break;
 	
@@ -83,17 +78,4 @@ switch(global.game_state) {
 
 if (keyboard_check_pressed(vk_f4) and NOT_ON_BROWSER) {
 	window_set_fullscreen(not window_get_fullscreen())	
-}
-
-if (DEBUG and keyboard_check_pressed(vk_backspace)) {
-	if (ON_BROWSER) {
-		show_debug_log(true);
-		window_set_size(1200, 900);
-		display_set_gui_size(640, 480);
-		surface_resize(application_surface, 640, 480);
-		show_debug_message(string(window_get_width()) + " " + string(window_get_height()))
-	} else {
-		display_set_gui_size(display_get_width(), display_get_height());
-		display_set_gui_maximize();
-	}	
 }

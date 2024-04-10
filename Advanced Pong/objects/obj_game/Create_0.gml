@@ -31,12 +31,60 @@ function rotate_color() {
 /// @description	creates or moves the ball, resets positions, and starts the game
 function start_game() {
 	if (not global.ball) {
-		global.ball = instance_create_depth(x, y, depth, obj_ball);	
+		global.ball = instance_create_depth(x, y, depth, obj_ball);
 	}
-
+	if (global.automation) {
+		set_ai_difficulty();
+		if (global.flip_sides) {
+			serving_side = serving_side == PADDLE_SIDE.LEFT ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
+		}
+	}
+	global.ball.initial_speed = global.settings.ball_initial_speed;
+	global.ball.speed_multiplier = global.settings.ball_multiplier;
 	serve_ball();
 	global.game_state = GAME_STATE.PLAYING;
-	global.paddle[PADDLE_SIDE.RIGHT].id.automated = global.automation;
+
+}
+
+function set_ai_difficulty() {
+	var _difficulty = global.difficulty;
+	var _low_lerp = 0.1;
+	var _high_lerp = 0.9;
+	
+	var _low_max_timer = 0.5;
+	var _high_max_timer = 2.5;
+	
+	var _low_refresh_chance = 0.5;
+	var _high_refresh_chance = 0.95;
+	
+	var _ai_side = global.flip_sides ? PADDLE_SIDE.LEFT : PADDLE_SIDE.RIGHT;
+	
+	with(global.paddle[_ai_side].id) {
+		automated = true;
+		automated_variables.difficulty = _difficulty;
+
+		switch(_difficulty) {
+			case PADDLE_AI_DIFFICULTY.VERY_LOW:
+				automated_variables.lerp_amount = _low_lerp;
+			break;
+		
+			case PADDLE_AI_DIFFICULTY.LOW:
+				automated_variables.lerp_amount = _high_lerp;
+			break;
+		
+			case PADDLE_AI_DIFFICULTY.MEDIUM_LOW:
+				automated_variables.lerp_amount = _low_lerp;
+				automated_variables.closing_in_max_timer = _low_max_timer;
+				automated_variables.closing_in_refresh_chance = _low_refresh_chance;
+			break;
+		
+			case PADDLE_AI_DIFFICULTY.MEDIUM:
+				automated_variables.lerp_amount = _high_lerp;
+				automated_variables.closing_in_max_timer = _high_max_timer;
+				automated_variables.closing_in_refresh_chance = _high_refresh_chance;
+			break;
+		}
+	}
 }
 
 function reset_game() {
@@ -44,6 +92,7 @@ function reset_game() {
 		instance_destroy(global.ball);
 		global.ball = noone;
 	}
+	// feather ignore GM1041
 	for (var _i = 0; _i < array_length(global.paddle); _i++) {
 		global.paddle[_i].score = 0;
 		global.paddle[_i].id.y = room_height / 2;
@@ -68,6 +117,12 @@ function serve_ball(_center = false) {
 		xspeed = dcos(_angle) * current_speed * sign(_paddle.x - x);
 		yspeed = dsin(_angle) * current_speed;
 		playing = true;
+	}
+	
+	with(_paddle) {
+		if (automated) {
+			paddle_find_ball_target();
+		}
 	}
 }
 
