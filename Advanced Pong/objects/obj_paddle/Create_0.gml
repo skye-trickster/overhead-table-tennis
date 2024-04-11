@@ -20,10 +20,21 @@ automated_variables = {
 power_state = PADDLE_POWER_STATE.NONE;
 
 /// @self	obj_paddle
-function on_paddle_collision() {
+function on_paddle_collision(_ball, _speed, _angle) {
+	show_debug_message({
+		_speed, _angle
+	});
 	switch(power_state) {
 		case PADDLE_POWER_STATE.POWER_READY:
 		case PADDLE_POWER_STATE.SUPER_READY:
 			power_state = PADDLE_POWER_STATE.NONE;
+		break;
+		
+		case PADDLE_POWER_STATE.NONE:
+			var _top_distance = abs(_ball.return_angle) - abs(_angle)
+			var _middle_distance = abs(_angle)
+			show_debug_message({_top_distance, _middle_distance});
+			// TODO: gain points based on the smaller of the two distances and the speed
+		break;
 	}
 }

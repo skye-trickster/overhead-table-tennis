@@ -58,7 +58,7 @@ function move_ball() {
 		audio_play_sound(snd_paddle_hit, 1, 0);
 		
 		// perform collision code with paddle
-		_paddle.id.on_paddle_collision()
+		_paddle.id.on_paddle_collision(self, current_speed, _theta);
 	}
 
 	y = _y;

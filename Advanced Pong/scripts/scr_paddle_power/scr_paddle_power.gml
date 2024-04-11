@@ -12,7 +12,12 @@ function paddle_power_behavior() {
 		switch(power_state) {
 			case PADDLE_POWER_STATE.NONE:
 				if (global.game_state == GAME_STATE.PLAYING and INPUT_CONFIRM_BUTTON_PRESSED) {
-					power_state = PADDLE_POWER_STATE.SUPER_READY;	
+					// power state check
+					if (power_meter_amount >= power_meter_max and super_meter_amount >= super_meter_max) {
+						power_state = PADDLE_POWER_STATE.SUPER_READY;
+					} else if (power_meter_amount >= power_meter_max) {
+						power_state = PADDLE_POWER_STATE.POWER_READY;	
+					}
 				}
 			break;
 			
