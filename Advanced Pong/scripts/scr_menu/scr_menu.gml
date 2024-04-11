@@ -299,7 +299,7 @@ var _main_menu_items = [
 		}),
 		new MenuNode("Difficulty", MENU_TYPE.SCALE, {
 			minimum: 1,
-			maximum: 4,
+			maximum: 5,
 			default_value: 2,
 			change_function: set_difficulty,
 			loop: true

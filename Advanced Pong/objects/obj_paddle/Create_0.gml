@@ -16,3 +16,14 @@ automated_variables = {
 	state: PADDLE_AI_STATE.RECEIVING,
 	lerp_amount: 0.1,
 }
+
+power_state = PADDLE_POWER_STATE.NONE;
+
+/// @self	obj_paddle
+function on_paddle_collision() {
+	switch(power_state) {
+		case PADDLE_POWER_STATE.POWER_READY:
+		case PADDLE_POWER_STATE.SUPER_READY:
+			power_state = PADDLE_POWER_STATE.NONE;
+	}
+}

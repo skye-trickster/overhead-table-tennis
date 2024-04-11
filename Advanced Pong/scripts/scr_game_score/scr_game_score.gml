@@ -37,12 +37,14 @@ function check_effect() {
 	return SCORE_EFFECT.NONE;
 }
 
-/// @function						tally_score(ball)
-/// @param {Id.Instance}	_ball	The ball instance
-function tally_score(_ball) {
+/// @function							tally_score(ball, [multiplier])
+/// @param {Id.Instance}	_ball		The ball instance
+/// @param {Real}			_multiplier	how much to scale the score by.
+function tally_score(_ball, _multiplier = 1) {
 	if (_ball.object_index != obj_ball) throw("score must be determined by the ball");
 	var _paddle = _ball.last_paddle;
-	global.paddle[_paddle.player_type].score += 1;
+	_ball.id.playing = false;
+	global.paddle[_paddle.player_type].score += _multiplier;
 	var _effect = check_effect();
 	
 	if (_effect == SCORE_EFFECT.RIGHT_WIN or _effect == SCORE_EFFECT.LEFT_WIN) {

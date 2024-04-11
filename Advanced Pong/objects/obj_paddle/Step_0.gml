@@ -10,5 +10,6 @@ switch(global.game_state) {
 		} else {
 			paddle_move_player();	
 		}
+		paddle_power_behavior();
 		break;
 }

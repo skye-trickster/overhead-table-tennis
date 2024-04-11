@@ -8,6 +8,37 @@ enum PADDLE_AI_DIFFICULTY {
 	LOW = 1,			// the simplest AI difficulty but without lerp
 	MEDIUM_LOW = 2,		// the more sophisticated difficulty
 	MEDIUM = 3,			// the more sophisticated difficulty
+	IMPOSSIBLE = 4,
+}
+
+function paddle_impossible_behavior() {
+	switch(automated_variables.state) {
+		case PADDLE_AI_STATE.RECEIVING:
+			switch(global.game_state) {
+				case GAME_STATE.BETWEEN_POINTS:
+					paddle_move_point(MIDDLE);
+				break;
+				
+				case GAME_STATE.PLAYING:
+					if (automated_variables.target) {
+						y = automated_variables.target;
+					} else {
+						paddle_find_ball_target();	
+					}
+					// just follow the ball position
+					// paddle_follow_ball();
+				break;
+			}
+		break;
+		case PADDLE_AI_STATE.SERVING:
+			// go to the midle to better get a handle on things
+			paddle_move_point(MIDDLE);
+			if (global.ball.last_paddle != id) {
+				paddle_find_ball_target();
+				automated_variables.state = PADDLE_AI_STATE.RECEIVING;	
+			}
+		break;
+	}
 }
 
 function paddle_easy_behavior() {
@@ -98,6 +129,10 @@ function paddle_move_automated() {
 		case PADDLE_AI_DIFFICULTY.MEDIUM_LOW:
 		case PADDLE_AI_DIFFICULTY.MEDIUM:
 			paddle_medium_behavior();
+		break;
+		
+		case PADDLE_AI_DIFFICULTY.IMPOSSIBLE:
+			paddle_impossible_behavior();
 		break;
 		
 		default:
@@ -220,7 +255,7 @@ function paddle_follow_ball() {
 	var _y = y + automated_variables.speed * paddle_speed;
 	var _half_height = sprite_height / 2;
 
-	y = clamp(_y, _half_height, room_height - _half_height);
+	y = clamp(_y, _half_height + 8, room_height - _half_height - 8);
 }
 
 function paddle_move_point(_target) {
@@ -234,7 +269,7 @@ function paddle_move_point(_target) {
 	var _y = y + paddle_speed * automated_variables.speed;
 	var _half_height = sprite_height / 2;
 	
-	y = clamp(_y, _half_height, room_height - _half_height);
+	y = clamp(_y, _half_height + 8, room_height - _half_height - 8);
 
 }
 
@@ -255,10 +290,10 @@ function paddle_move_player() {
 	var _y = y + _vertical * paddle_speed;
 	var _half_height = sprite_height / 2
 
-	if (_y + _half_height > room_height) {
-		_y = room_height - _half_height
-	} else if (_y - _half_height < 0) {
-		_y = _half_height;
+	if (_y + _half_height > room_height - 8) {
+		_y = room_height - 8 - _half_height;
+	} else if (_y - _half_height < WALL_HEIGHT) {
+		_y = _half_height + WALL_HEIGHT;
 	}
 
 	y = _y

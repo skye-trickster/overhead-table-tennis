@@ -21,6 +21,9 @@ function set_difficulty(_level) {
 		case 4:
 			global.difficulty = PADDLE_AI_DIFFICULTY.MEDIUM;
 		break;
+		case 5:
+			global.difficulty = PADDLE_AI_DIFFICULTY.IMPOSSIBLE;
+		break;
 		default:
 			throw("Difficulty can only scale between 1 and 4");
 	}
