@@ -35,6 +35,14 @@ function on_paddle_collision(_ball, _speed, _angle) {
 			var _middle_distance = abs(_angle)
 			show_debug_message({_top_distance, _middle_distance});
 			// TODO: gain points based on the smaller of the two distances and the speed
+			super_meter_amount = min(super_meter_amount + base_meter_gain * 0.55, super_meter_max);
+			power_meter_amount += base_meter_gain;
+			if (power_meter_amount > power_meter_max) {
+				var _extra_meter = power_meter_amount - power_meter_max;
+				power_meter_amount -= _extra_meter;
+				super_meter_amount = min(super_meter_amount + _extra_meter * 0.25, super_meter_max);
+			}
+			show_debug_message({power_meter_amount, super_meter_amount});
 		break;
 	}
 }
