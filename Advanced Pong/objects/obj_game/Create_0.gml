@@ -17,6 +17,7 @@ serving_side = PADDLE_SIDE.LEFT;
 switch_sides = false;
 quit_timer = 0;
 point_timer = 0;
+explosion_timer = 0;
 color_rotater = 0;
 win_color = c_white;
 
@@ -33,6 +34,10 @@ function start_game() {
 	if (not global.ball) {
 		global.ball = instance_create_depth(x, y, depth, obj_ball);
 	}
+	for (var _i = PADDLE_SIDE.LEFT; _i <= PADDLE_SIDE.RIGHT; ++_i) {
+		global.paddle[_i].id.reset_paddle(true);
+		global.paddle[_i].score = 0;
+	}
 	if (global.automation) {
 		set_ai_difficulty();
 		serving_side = global.flip_sides ? PADDLE_SIDE.RIGHT : PADDLE_SIDE.LEFT;
@@ -41,6 +46,7 @@ function start_game() {
 	}
 	global.ball.initial_speed = global.settings.ball_initial_speed;
 	global.ball.speed_multiplier = global.settings.ball_multiplier;
+	switch_sides = false;
 	serve_ball();
 	global.game_state = GAME_STATE.PLAYING;
 
@@ -97,12 +103,19 @@ function reset_game() {
 	}
 	// feather ignore GM1041
 	for (var _i = 0; _i < array_length(global.paddle); _i++) {
-		global.paddle[_i].score = 0;
 		global.paddle[_i].id.y = room_height / 2;
+		global.paddle[_i].id.reset_paddle(false);
 	}
 	global.game_state = GAME_STATE.MENU;
 	global.main_menu.selected = 0;
 	global.pause_menu.selected = 0;
+	serving_side = PADDLE_SIDE.LEFT;
+	switch_sides = false;
+	quit_timer = 0;
+	point_timer = 0;
+	explosion_timer = 0;
+	color_rotater = 0;
+	win_color = c_white;
 }
 
 function serve_ball(_center = false) {

@@ -30,7 +30,7 @@ function set_difficulty(_level) {
 }
 
 font_add_enable_aa(false);
-global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.:<>", true, 2);
+global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.:<>!", true, 2);
 draw_set_font(global.font);
 
 /// @function			audio_volume_set(volume)

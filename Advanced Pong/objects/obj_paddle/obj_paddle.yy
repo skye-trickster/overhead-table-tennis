@@ -41,6 +41,7 @@
     {"$GMObjectProperty":"","%Name":"super_meter_amount","filters":[],"listItems":[],"multiselect":false,"name":"super_meter_amount","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
     {"$GMObjectProperty":"","%Name":"super_meter_max","filters":[],"listItems":[],"multiselect":false,"name":"super_meter_max","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"20","varType":0,},
     {"$GMObjectProperty":"","%Name":"base_meter_gain","filters":[],"listItems":[],"multiselect":false,"name":"base_meter_gain","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"1","varType":0,},
+    {"$GMObjectProperty":"","%Name":"shown","filters":[],"listItems":[],"multiselect":false,"name":"shown","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"True","varType":3,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

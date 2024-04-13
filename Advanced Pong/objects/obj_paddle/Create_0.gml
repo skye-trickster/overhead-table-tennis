@@ -18,12 +18,12 @@ automated_variables = {
 }
 
 power_state = PADDLE_POWER_STATE.NONE;
+power_meter = new PaddlePowerMeter(self);
+power_color = new ColorScale(10);
+super_color = new ColorScale(30);
 
 /// @self	obj_paddle
 function on_paddle_collision(_ball, _speed, _angle) {
-	show_debug_message({
-		_speed, _angle
-	});
 	switch(power_state) {
 		case PADDLE_POWER_STATE.SUPER_READY:
 			super_meter_amount = 0;
@@ -40,8 +40,9 @@ function on_paddle_collision(_ball, _speed, _angle) {
 			var _gained_meter = base_meter_gain * (1 - (min(_top_distance, _middle_distance) / _ball.return_angle));
 			
 			// gain additional meter based on ball speed multiplier
-			// 5/7*(x - 1.1)^2 + 1.1: inflection at 1.1 and 2.5 multipliers
-			var _speed_multiplier_bonus = 5 / 7 * power((_ball.speed_multiplier - 1.1), 2) + 1.1;
+			// 5/7*(x - 1.1)^2 + 1.1: inflection at 1.1 and 2.5 multipliers; linear up to 1.1
+			var _speed_multiplier_bonus = _ball.speed_multiplier >= 1.1 ? 5 / 7 * power((_ball.speed_multiplier - 1.1), 2) + 1.1 : _ball.speed_multiplier;
+			
 			
 			_gained_meter *= _speed_multiplier_bonus;
 			
@@ -59,9 +60,20 @@ function on_paddle_collision(_ball, _speed, _angle) {
 	}
 }
 
-function on_paddle_point_end(_win) {
-	if (_win) {
+function on_paddle_point_end(_winning_side) {
+	if (player_type == _winning_side) {
 		power_meter_amount *= 0.75;
 	}
 	super_meter_amount = 0;
+}
+
+function reset_paddle(_full = false) {
+	shown = true
+	
+	if (_full) {
+		y = room_height / 2;
+		automated = false;
+		power_meter_amount = 0;
+		super_meter_amount = 0;
+	}
 }

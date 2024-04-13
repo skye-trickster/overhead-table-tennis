@@ -2,6 +2,7 @@ enum GAME_STATE {
 	NOT_SPECIFIED,
 	MENU,
 	PLAYING,
+	EXPLOSION,
 	BETWEEN_POINTS,
 	PAUSING,
 	WINNING,
@@ -35,4 +36,16 @@ function set_paddle(_instance, _side) {
 /// @returns {id.instance}		the opposing side's paddle
 function get_other_paddle(_side) {
 	return _side == PADDLE_SIDE.LEFT ? global.paddle[PADDLE_SIDE.RIGHT].id : global.paddle[PADDLE_SIDE.LEFT].id;	
+}
+
+function get_all_paddles(_instances = true) {
+	if (_instances) {
+		return [global.paddle[PADDLE_SIDE.LEFT].id, global.paddle[PADDLE_SIDE.RIGHT].id];			
+	}
+	
+	return [global.paddle[PADDLE_SIDE.LEFT], global.paddle[PADDLE_SIDE.RIGHT]];	
+}
+
+function is_in_play() {
+	return global.game_state == GAME_STATE.PLAYING or global.game_state == GAME_STATE.EXPLOSION or global.game_state == GAME_STATE.BETWEEN_POINTS;
 }

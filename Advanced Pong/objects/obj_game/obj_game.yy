@@ -40,6 +40,7 @@
     {"$GMObjectProperty":"","%Name":"time_between_points","filters":[],"listItems":[],"multiselect":false,"name":"time_between_points","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0.5","varType":0,},
     {"$GMObjectProperty":"","%Name":"time_after_win","filters":[],"listItems":[],"multiselect":false,"name":"time_after_win","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"3","varType":0,},
     {"$GMObjectProperty":"","%Name":"color_rotate_timer","filters":[],"listItems":[],"multiselect":false,"name":"color_rotate_timer","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0.25","varType":0,},
+    {"$GMObjectProperty":"","%Name":"explosion_timer_max","filters":[],"listItems":[],"multiselect":false,"name":"explosion_timer_max","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0.75","varType":0,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
