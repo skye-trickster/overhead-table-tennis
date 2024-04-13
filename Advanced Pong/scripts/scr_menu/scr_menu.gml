@@ -299,7 +299,7 @@ var _main_menu_items = [
 		}),
 		new MenuNode("Difficulty", MENU_TYPE.SCALE, {
 			minimum: 1,
-			maximum: 4,
+			maximum: 5,
 			default_value: 2,
 			change_function: set_difficulty,
 			loop: true
@@ -307,7 +307,7 @@ var _main_menu_items = [
 		new MenuNode("Volume", MENU_TYPE.SCALE, {
 			minimum: 0,
 			maximum: 10,
-			default_value: 10,
+			default_value: floor(global.sound_volume * 10),
 			change_function: audio_volume_set,
 			loop: false
 		}),

@@ -24,12 +24,26 @@ switch(global.game_state) {
 			global.game_state = GAME_STATE.PAUSING;
 		}
 	break;
+	
+	case GAME_STATE.EXPLOSION:
+		explosion_timer += DELTA_TIME;
+		if (explosion_timer > explosion_timer_max) {
+			explosion_timer = 0;
+			audio_play_sound(snd_point_gain, 0, 0);
+			global.game_state = GAME_STATE.BETWEEN_POINTS;
+		}
+	break;
 
 	case GAME_STATE.BETWEEN_POINTS:
 		// TODO: fix issue where you can't pause in between points
 		point_timer += DELTA_TIME;
 		if (point_timer > time_between_points) {
 			switch_serve();
+			// feather ignore GM1041
+			var _paddles = get_all_paddles()
+			for (var _i = 0; _i < array_length(_paddles); _i++) {
+				_paddles[_i].reset_paddle(false);
+			}
 			serve_ball();
 			point_timer = 0;
 			global.game_state = GAME_STATE.PLAYING;

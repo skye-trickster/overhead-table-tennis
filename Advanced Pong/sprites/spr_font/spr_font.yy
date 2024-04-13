@@ -3,7 +3,7 @@
   "%Name":"spr_font",
   "bboxMode":0,
   "bbox_bottom":14,
-  "bbox_left":0,
+  "bbox_left":3,
   "bbox_right":12,
   "bbox_top":0,
   "collisionKind":1,

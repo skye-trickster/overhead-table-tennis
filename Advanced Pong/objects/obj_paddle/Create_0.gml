@@ -15,4 +15,67 @@ automated_variables = {
 	speed: 0,
 	state: PADDLE_AI_STATE.RECEIVING,
 	lerp_amount: 0.1,
+	current_delay: 0,
+	delay_max: 1.5,
+}
+
+power_state = PADDLE_POWER_STATE.NONE;
+power_meter = new PaddlePowerMeter(self);
+power_color = new ColorScale(10);
+super_color = new ColorScale(30);
+
+/// @self	obj_paddle
+function on_paddle_collision(_ball, _speed, _angle) {
+	switch(power_state) {
+		case PADDLE_POWER_STATE.SUPER_READY:
+			super_meter_amount = 0;
+		case PADDLE_POWER_STATE.POWER_READY:
+			power_meter_amount = 0;
+			power_state = PADDLE_POWER_STATE.NONE;
+		break;
+		
+		case PADDLE_POWER_STATE.NONE:
+			var _top_distance = (abs(_ball.return_angle) - abs(_angle));
+			var _middle_distance = abs(_angle);
+			
+			// gain meter the closer you are to the middle of the edge
+			var _gained_meter = base_meter_gain * (1 - (min(_top_distance, _middle_distance) / _ball.return_angle));
+			
+			// gain additional meter based on ball speed multiplier
+			// 5/7*(x - 1.1)^2 + 1.1: inflection at 1.1 and 2.5 multipliers; linear up to 1.1
+			var _speed_multiplier_bonus = _ball.speed_multiplier >= 1.1 ? 5 / 7 * power((_ball.speed_multiplier - 1.1), 2) + 1.1 : _ball.speed_multiplier;
+			
+			
+			_gained_meter *= _speed_multiplier_bonus;
+			
+			// TODO: gain points based on the smaller of the two distances and the speed
+			power_meter_amount += _gained_meter;
+			super_meter_amount += _gained_meter;
+			if (power_meter_amount > power_meter_max) {
+				var _extra_meter = power_meter_amount - power_meter_max;
+				power_meter_amount -= _extra_meter;
+				// gain about half of the meter
+				super_meter_amount = super_meter_amount + _extra_meter * 0.5;
+			}
+			super_meter_amount = min(super_meter_amount, super_meter_max);
+		break;
+	}
+}
+
+function on_paddle_point_end(_winning_side) {
+	if (player_type == _winning_side) {
+		power_meter_amount *= 0.75;
+	}
+	super_meter_amount = 0;
+}
+
+function reset_paddle(_full = false) {
+	shown = true
+	
+	if (_full) {
+		y = room_height / 2;
+		automated = false;
+		power_meter_amount = 0;
+		super_meter_amount = 0;
+	}
 }

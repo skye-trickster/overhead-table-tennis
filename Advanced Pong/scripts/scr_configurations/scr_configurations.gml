@@ -21,13 +21,16 @@ function set_difficulty(_level) {
 		case 4:
 			global.difficulty = PADDLE_AI_DIFFICULTY.MEDIUM;
 		break;
+		case 5:
+			global.difficulty = PADDLE_AI_DIFFICULTY.IMPOSSIBLE;
+		break;
 		default:
 			throw("Difficulty can only scale between 1 and 4");
 	}
 }
 
 font_add_enable_aa(false);
-global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.:<>", true, 2);
+global.font = font_add_sprite_ext(spr_font, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.:<>!", true, 2);
 draw_set_font(global.font);
 
 /// @function			audio_volume_set(volume)
