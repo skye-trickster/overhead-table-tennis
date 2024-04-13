@@ -87,13 +87,16 @@ function paddle_medium_behavior() {
 						refresh_close_in_chance(true);
 					}
 					
-					if (automated_variables.closing_in) {
+					if (automated_variables.closing_in and automated_variables.current_delay > automated_variables.delay_max) {
 						paddle_move_point(automated_variables.target);
 						automated_variables.closing_in_timer += DELTA_TIME;
 						// refresh close in if the timer is up
 						if (automated_variables.closing_in_timer > automated_variables.closing_in_max_timer) {
 							refresh_close_in_chance(false);
 						}
+					} else if (automated_variables.current_delay < automated_variables.delay_max) {
+						automated_variables.current_delay += DELTA_TIME;
+						paddle_move_point(random_range(automated_variables.target, global.ball.y))
 					} else {
 						paddle_follow_ball();	
 					}
@@ -112,6 +115,8 @@ function paddle_medium_behavior() {
 			if (global.ball.last_paddle != id) {
 				// find the ball target when switching
 				paddle_find_ball_target();
+				automated_variables.current_delay = max(0, global.ball.speed_multiplier - random_range(-1.5, 1.5));
+				show_debug_message(automated_variables.current_delay);
 			}
 		break;
 	}

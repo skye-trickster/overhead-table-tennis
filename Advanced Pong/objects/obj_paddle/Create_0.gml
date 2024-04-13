@@ -15,6 +15,8 @@ automated_variables = {
 	speed: 0,
 	state: PADDLE_AI_STATE.RECEIVING,
 	lerp_amount: 0.1,
+	current_delay: 0,
+	delay_max: 1.5,
 }
 
 power_state = PADDLE_POWER_STATE.NONE;

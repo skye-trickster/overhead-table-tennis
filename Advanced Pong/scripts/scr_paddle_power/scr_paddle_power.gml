@@ -8,6 +8,8 @@ enum PADDLE_POWER_STATE {
 function paddle_power_behavior() {
 	if (automated) {
 		power_state = PADDLE_POWER_STATE.NONE;	
+		power_meter_amount = 0;
+		super_meter_amount = 0;
 	} else {
 		var _power_pressed = false;
 		
